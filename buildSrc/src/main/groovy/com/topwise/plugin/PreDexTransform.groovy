@@ -50,7 +50,7 @@ public class PreDexTransform extends Transform {
             input.directoryInputs.each {DirectoryInput directoryInput->
 
                 //TODO 这里可以对input的文件做处理，比如代码注入！
-                project.logger.error "injectDir  start ---  " + directoryInput
+                project.logger.error "injectDir  start ---  " + directoryInput.file.absolutePath
                 Inject.injectDir(directoryInput.file.absolutePath)
 
                 // 获取output目录

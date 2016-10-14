@@ -6,6 +6,6 @@ package com.example.topwise.hotfixcat;
 
 public class Cat {
     public String eat (){
-        return "  cat eat meat !";
+        return "  cat eat lllllll !";
     }
 }

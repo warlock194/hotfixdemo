@@ -41,9 +41,9 @@ public class Inject {
                         && !filePath.contains('R.class')
                         && !filePath.contains("BuildConfig.class")
                         // 这里是application的名字，可以通过解析清单文件获得，先写死了
-                        && !filePath.contains("HotPatchApplication.class")) {
+                        && !filePath.contains("MainApplication.class")) {
                     // 这里是应用包名，也能从清单文件中获取，先写死
-                    int index = filePath.indexOf("com\\aitsuki\\hotpatchdemo")
+                    int index = filePath.indexOf("com/example/topwise/hotfix")
                     if (index != -1) {
                         int end = filePath.length() - 6 // .class = 6
                         String className = filePath.substring(index, end).replace('\\', '.').replace('/','.')
@@ -77,8 +77,12 @@ public class Inject {
             for(String className : classNameList) {
                 if (className.endsWith(".class")
                         && !className.contains('R$')
-                        && !className.contains('R.class')
-                        && !className.contains("BuildConfig.class")) {
+                        && !className.contains('R.class')/*
+                        && !className.contains("Cat.class")
+                        &&  !className.contains("Cat.class")
+                        &&  !className.contains("Cat.class")
+                        &&  !className.contains("Cat.class")*/
+                ) {
                     className = className.substring(0, className.length()-6)
                     injectClass(className, jarZipDir)
                 }
@@ -99,7 +103,7 @@ public class Inject {
         }
         def constructor = c.getConstructors()[0];
         // 这里需要输入完整类名，否则javassist会报错
-        constructor.insertAfter("System.out.println(dodola.hackdex.AntilazyLoad.class);")
+        constructor.insertAfter("System.out.println(com.example.hackdex.AntilazyLoad.class);")
         c.writeFile(path)
     }
 
