@@ -51,7 +51,7 @@ public class PreDexTransform extends Transform {
 
                 //TODO 这里可以对input的文件做处理，比如代码注入！
                 project.logger.error "injectDir  start ---  " + directoryInput.file.absolutePath
-                Inject.injectDir(directoryInput.file.absolutePath)
+                Inject.injectDir(directoryInput.file.absolutePath,project)
 
                 // 获取output目录
                 def dest = outputProvider.getContentLocation(directoryInput.name,
@@ -69,16 +69,12 @@ public class PreDexTransform extends Transform {
                 project.logger.error "inject start ---  " + "exploded-aar"+"/"+projectName
                 if(jarPath.endsWith(".jar") && jarPath.contains("exploded-aar"+"/"+projectName)) {
                     project.logger.error "inject start ---"
-                    Inject.injectJar(jarPath)
+                    Inject.injectJar(jarPath,project)
                 }
                 // 重命名输出文件（同目录copyFile会冲突）
                 def jarName = jarInput.name
                 def md5Name = DigestUtils.md5Hex(jarInput.file.getAbsolutePath())
                 project.logger.error "inject start --- 77 name  " + jarInput.name
-                project.logger.error "inject start --- 77 " + jarInput.getFile()
-                project.logger.error "inject start --- 77 " + jarInput.getName()
-                project.logger.error "inject start --- 77 " + jarInput.file.getPath()
-                project.logger.error "inject start --- 77 " + jarInput.file.getAbsolutePath()
                 project.logger.error "inject start --- 77 " + jarInput.file.getAbsoluteFile()
                 project.logger.error "inject start --- 77 " + md5Name
                 if(jarName.endsWith(".jar")) {

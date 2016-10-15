@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.Environment;
 import android.util.Log;
 
+//import com.example.hotpatch.HotPatch;
+
 import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -20,14 +22,27 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        String hackdexPath = Environment.getExternalStorageDirectory().getAbsolutePath().concat("/hack_dex.jar");
+        File hackfile = new File(hackdexPath);
+        if (hackfile.exists()) {
+            inject(hackdexPath);
+        } else {
+            Log.e("warlock", hackdexPath + "不存在");
+        }
         // 获取补丁，如果存在就执行注入操作
-        String dexPath = Environment.getExternalStorageDirectory().getAbsolutePath().concat("/patch_dex.jar");
+ /*       String dexPath = Environment.getExternalStorageDirectory().getAbsolutePath().concat("/patch_dex.jar");
+
         File file = new File(dexPath);
         if (file.exists()) {
             inject(dexPath);
         } else {
-            Log.e("BugFixApplication", dexPath + "不存在");
-        }
+            Log.e("warlock", dexPath + "不存在");
+        }*/
+
+//        HotPatch.init(this);
+        // 获取补丁，如果存在就执行注入操作
+//        String dexPath = Environment.getExternalStorageDirectory().getAbsolutePath().concat("/patch_dex.jar");
+//        HotPatch.inject(dexPath);
     }
     /**
      * 要注入的dex的路径
@@ -56,7 +71,7 @@ public class MainApplication extends Application {
             //======== 以下是测试是否成功注入 =================
             Object object = getField(pathList.getClass(), "dexElements", pathList);
             int length = Array.getLength(object);
-            Log.e("BugFixApplication", "length = " + length);
+            Log.e("warlock", "length = " + length);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
